@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderController">
+    <children>
+        <Button fx:id="btnAdd" layoutX="200.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#addItem" prefHeight="28.0" prefWidth="54.0" text="Add">
+            <font>
+                <Font name="Agency FB Bold" size="15.0" />
+            </font>
+        </Button>
+        <ComboBox fx:id="cbSize" layoutX="166.0" layoutY="313.0" prefHeight="25.0" prefWidth="123.0" promptText="Choose Size" />
+        <TableView fx:id="tblOrder" prefHeight="297.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />
+                <TableColumn fx:id="sizeCol" prefWidth="75.0" text="Size" />
+                <TableColumn fx:id="colorCol" prefWidth="75.0" text="Color" />
+                <TableColumn fx:id="qtyCol" prefWidth="75.0" text="Quantity" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+        <ComboBox fx:id="cbType" layoutX="14.0" layoutY="313.0" prefHeight="25.0" prefWidth="123.0" promptText="Choose Type" />
+        <ComboBox fx:id="cbColor" layoutX="316.0" layoutY="313.0" prefHeight="25.0" prefWidth="123.0" promptText="Choose Color" />
+        <TextField fx:id="txtQty" layoutX="462.0" layoutY="312.0" promptText="Add Quantity">
+            <font>
+                <Font name="Agency FB Bold" size="14.0" />
+            </font>
+        </TextField>
+        <Button fx:id="btnDel" layoutX="350.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#delItem" prefHeight="28.0" prefWidth="54.0" text="Delete">
+            <font>
+                <Font name="Agency FB Bold" size="14.0" />
+            </font>
+        </Button>
+    </children>
+</Pane>

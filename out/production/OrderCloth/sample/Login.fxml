@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Label layoutX="80.0" layoutY="139.0" prefHeight="41.0" prefWidth="126.0" text="username : ">
+         <font>
+            <Font name="Agency FB Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="206.0" prefHeight="41.0" prefWidth="126.0" text="password :">
+         <font>
+            <Font name="Agency FB Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUser" alignment="CENTER" layoutX="222.0" layoutY="143.0">
+         <font>
+            <Font name="Agency FB Bold" size="18.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="txtPass" alignment="CENTER" layoutX="222.0" layoutY="210.0">
+         <font>
+            <Font name="Agency FB Bold" size="18.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="btnLogin" layoutX="181.0" layoutY="298.0" mnemonicParsing="false" onMouseClicked="#clicked" prefHeight="37.0" prefWidth="64.0" text="Login">
+         <font>
+            <Font name="Agency FB Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnExit" layoutX="402.0" layoutY="297.0" mnemonicParsing="false" onMouseClicked="#appExit" prefHeight="37.0" prefWidth="64.0" text="Exit">
+         <font>
+            <Font name="Agency FB Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label layoutX="404.0" layoutY="369.0" text="Database Status :">
+         <font>
+            <Font name="Agency FB Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStatus" layoutX="497.0" layoutY="369.0" prefHeight="17.0" prefWidth="77.0">
+         <font>
+            <Font name="Agency FB Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
