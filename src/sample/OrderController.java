@@ -21,7 +21,6 @@ import java.lang.String;
 public class OrderController implements Initializable {
 
     private IntegerProperty index = new SimpleIntegerProperty();
-    public boolean addCondition = false;
 
     ObservableList<String> sizeList = FXCollections.observableArrayList("XS","S","M","L","XL","XXL");
 
@@ -29,10 +28,10 @@ public class OrderController implements Initializable {
 
     ObservableList<String> colorList = FXCollections.observableArrayList("Black","Red","Blue","Green","Yellow","White");
 
-    ObservableList<Clothes> clothesList = FXCollections.observableArrayList(new Clothes());
+    ObservableList<Clothes> clothesList;
 
     @FXML
-    public TableView tblOrder;
+    public TableView<Clothes> tblOrder;
     @FXML
     public ComboBox cbSize;
     @FXML
@@ -43,13 +42,13 @@ public class OrderController implements Initializable {
     public TextField txtQty;
 
     @FXML
-    public TableColumn typeCol=  new TableColumn("Type");
+    public TableColumn<Clothes, String> typeCol=  new TableColumn("Type");
     @FXML
-    public TableColumn sizeCol =  new TableColumn("Size");
+    public TableColumn<Clothes, String> sizeCol =  new TableColumn("Size");
     @FXML
-    public TableColumn colorCol =  new TableColumn("Color");
+    public TableColumn<Clothes, String> colorCol =  new TableColumn("Color");
     @FXML
-    public TableColumn qtyCol =  new TableColumn("Quantity");
+    public TableColumn<Clothes, String> qtyCol =  new TableColumn("Quantity");
 
 
     @Override
@@ -60,30 +59,22 @@ public class OrderController implements Initializable {
         cbColor.setItems(colorList);
         txtQty.setText("");
 
-        typeCol.setCellValueFactory(new PropertyValueFactory<Clothes,String>("type"));
-        sizeCol.setCellValueFactory(new PropertyValueFactory<Clothes,String>("size"));
-        colorCol.setCellValueFactory(new PropertyValueFactory<Clothes,String>("color"));
-        qtyCol.setCellValueFactory(new PropertyValueFactory<Clothes,String>("quantity"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
+        colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
+
+        clothesList = FXCollections.observableArrayList();
 
         //tblOrder.getColumns().addAll(typeCol,sizeCol,colorCol,qtyCol);
-        tblOrder.setItems(clothesList);
+        //tblOrder.setItems(clothesList);
 
     }
 
     public void addItem(Event event) {
-        System.out.println(addCondition);
+        clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
 
-        if(addCondition == true)
-        {
-            clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
-        }
-        else
-        {
-            clothesList.remove(index.get());
-            tblOrder.getSelectionModel().clearSelection();
-            clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
-            addCondition = true;
-        }
+       tblOrder.setItems(clothesList);
+
         //tblOrder.getColumns().addAll(cbSize.getValue(),cbType.getValue(),cbColor.getValue(),txtQty.getText());
 
         //clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
