@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import java.lang.String;
 
@@ -50,6 +53,7 @@ public class OrderController implements Initializable {
     @FXML
     public TableColumn<Clothes, String> qtyCol =  new TableColumn("Quantity");
 
+    Connection DBobj;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,23 +66,70 @@ public class OrderController implements Initializable {
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
         colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
-
+        qtyCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         clothesList = FXCollections.observableArrayList();
 
+        DBobj = SqliteConnection.Connector();
+        buildData();
+
+        tblOrder.setItems(clothesList);
         //tblOrder.getColumns().addAll(typeCol,sizeCol,colorCol,qtyCol);
         //tblOrder.setItems(clothesList);
 
     }
 
-    public void addItem(Event event) {
-        clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
+    public void buildData()
+    {
+        try {
+            String theQuery = "Select * from t_shirt Order By id";
+            ResultSet rs = DBobj.createStatement().executeQuery(theQuery);
+            while(rs.next())
+            {
+                Clothes cl = new Clothes();
+                cl.setType(rs.getString("type"));
+                cl.setSize(rs.getString("size"));
+                cl.setColor(rs.getString("color"));
+                cl.setQuantity(rs.getString("quantity"));
+                clothesList.add(cl);
+            }
+            tblOrder.setItems(clothesList);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+    }
 
-       tblOrder.setItems(clothesList);
+    public void addItem(Event event)
+    {
+        Clothes cl = new Clothes();
+        cl.setType(cbType.getValue().toString());
+        cl.setSize(cbSize.getValue().toString());
+        cl.setColor(cbColor.getValue().toString());
+        cl.setQuantity(txtQty.getText());
 
-        //tblOrder.getColumns().addAll(cbSize.getValue(),cbType.getValue(),cbColor.getValue(),txtQty.getText());
+        String theQuery = "Insert into t_shirt(type,size,color,quantity) values (?,?,?,?)";
 
-        //clothesList.add(new Clothes(cbSize.getValue().toString(),cbType.getValue().toString(),cbColor.getValue().toString(),txtQty.getText()));
-        //clothesList.add(new Clothes("","","",txtQty.getText()));
+        try{
+            PreparedStatement pst = DBobj.prepareStatement(theQuery);
+
+            String size = cl.getSize();
+            String type = cl.getType();
+            String color = cl.getColor();
+            String quantity = cl.getQuantity();
+
+            pst.setString(1, type);
+            pst.setString(2, size);
+            pst.setString(3, color);
+            pst.setString(4, quantity);
+            pst.executeUpdate();
+            clothesList.add(cl);
+            //tblOrder.setItems(clothesList);
+        }
+        catch(Exception e){
+           e.printStackTrace();
+           System.out.println("Error on Adding Data");
+        }
     }
 
     public void delItem(Event event) {
