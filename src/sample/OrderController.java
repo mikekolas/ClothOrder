@@ -86,6 +86,7 @@ public class OrderController implements Initializable {
             while(rs.next())
             {
                 Clothes cl = new Clothes();
+                cl.setId(rs.getInt("id"));
                 cl.setType(rs.getString("type"));
                 cl.setSize(rs.getString("size"));
                 cl.setColor(rs.getString("color"));
@@ -112,7 +113,7 @@ public class OrderController implements Initializable {
 
         try{
             PreparedStatement pst = DBobj.prepareStatement(theQuery);
-
+            //int id = cl.getId();
             String size = cl.getSize();
             String type = cl.getType();
             String color = cl.getColor();
@@ -133,7 +134,23 @@ public class OrderController implements Initializable {
     }
 
     public void delItem(Event event) {
-        clothesList.remove(index.get());
-        tblOrder.getSelectionModel().clearSelection();
+        Clothes cl = tblOrder.getSelectionModel().getSelectedItem();
+
+        String theQuery = "Delete from t_shirt where id = ?";
+        try{
+            PreparedStatement pst = DBobj.prepareStatement(theQuery);
+
+            int _id = cl.getId();
+
+            pst.setInt(1,_id);
+            pst.executeUpdate();
+            clothesList.remove(cl);
+            //tblOrder.setItems(clothesList);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error on Deleting Data");
+        }
+        tblOrder.getSelectionModel().clearSelection(); //deselection
     }
 }

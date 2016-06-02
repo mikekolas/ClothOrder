@@ -3,6 +3,7 @@ package sample;
 
 public class Clothes {
 
+    int id;
     String size;
     String type;
     String color;
@@ -10,14 +11,16 @@ public class Clothes {
 
     public Clothes() //constructor
     {
+        id = 0;
         size = null;
         type = null;
         color = null;
         quantity = null;
     }
 
-    public Clothes(String size,String type, String color, String quantity)
+    public Clothes(int id,String size,String type, String color, String quantity)
     {
+        this.id = id;
         this.size = size;
         this.type = type;
         this.color = color;
@@ -54,6 +57,14 @@ public class Clothes {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }
